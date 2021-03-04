@@ -39,77 +39,7 @@ $('.cs_board .tabmenu > li').on('click', function(){
     .siblings().removeClass('active')
 })
 
-$('#header .open').addClass('on')
-$('#header .open').on('click', function(){
-    $(this).next().addClass('on')
-    $(this).removeClass('on')
-    $(this).next().next().addClass('on')
-})
-$('#header .close').on('click', function(){
-    $(this).prev().removeClass('on')
-    $(this).removeClass('on')
-    $(this).prev().prev().addClass('on')
-})
 
-
-
-// 함수선언
-function init(){
-    var ww = $(window).width()
-    if (ww>1024 && !$('html').hasClass('pc') ) {
-        $('html').addClass('pc').removeClass('mobile')
-        $('.search #sbox').removeClass('on')
-    } else if ( ww<=1024 && !$('html').hasClass('mobile') ) {
-        $('html').addClass('mobile').removeClass('pc')
-        $('#header .close').removeClass('on')
-        $('#header #nav').removeClass('on')
-        $('#header .open').addClass('on')
-        $('.search #sbox').removeClass('on')
-    }
-}
-
-// 함수호출
-init()
-
-$(window).on('resize', function(){
-    init()
-})
-
-
-$('.depth1 > li').hover(
-    function(){
-        if ( $('html').hasClass('pc') ) {
-            $(this).addClass('on')
-        }
-    },
-    function(){
-        if ( $('html').hasClass('pc') ) {
-            $(this).removeClass('on')
-        }
-    }
-)
-$('.depth1 > li').on('click', function(e){
-    if ( $('html').hasClass('mobile') ) {
-        e.preventDefault()
-        $(this).toggleClass('on')
-        $(this).siblings().removeClass('on')
-    }
-})
-
-
-
-
-
-$('.depth2 > li').on('click', function(e){
-    e.stopPropagation()
-})
-
-
-
-// 돋보기 클릭시 검색창 박스 열고닫기
-$('.search label').on('click', function(){
-    $(this).prev().toggleClass('on')
-})
 
 
 // 동영상이미지 클릭시 모달창에서 유튜브동영상 플레이시키기
@@ -146,11 +76,10 @@ $('body').on('click', '.vin button', function(){
 
 // What We Do에서 클릭시 배경이미지 모달창에 표시하기
 $('.article2 ul li').on('click', function(){
-
-   var bgimg = $(this).css('backgroundImage')
-   // p.128
-   var newbgimg = bgimg.replace('url(.', '')
-   var src = newbgimg.replace(')', '')
+    var bgimg = $(this).css('backgroundImage')
+    var newbg = bgimg.split('img/')
+    var src = newbg[1].replace('")', '')
+    console.log(src)
    $('body').append(`<div class="outbox"><div class="inbox"></div></div>`)
    $('.outbox').css({
        position:'fixed',
@@ -161,5 +90,26 @@ $('.article2 ul li').on('click', function(){
     position:'absolute',
     top:'50%', left:'50%', transform:'translate(-50%,-50%)'
     })
-    $('.inbox').append(`<img src="${src}" alt="">`)
+    $('.inbox').append(`<img src="./img/${src}" alt="">`)
 })
+
+
+
+// product 구역의 제품설명을 두 줄만 보이도록 하시오.
+// p.129 .substring() 메서드 활용
+// 제이쿼리 $('선택자')에는 .textContent 속성을 사용할 수 없으나,
+// 자바스크립트 오브젝트 elP[i] 에는 제이쿼리 .text() 메서드를 사용할 수 있음
+$('.article4 ul p').each(function(){
+    var text = $(this).text()
+    text = text.substring(0, 57)
+    $(this).text(text+'...')
+})
+
+// var elP = document.querySelectorAll('.article4 ul p')
+// for (var i=0; i<elP.length; i++) {
+//     var text = elP[i].textContent
+//     text = text.substring(0, 57)
+//     elP[i].textContent = text+'...'
+// }
+
+

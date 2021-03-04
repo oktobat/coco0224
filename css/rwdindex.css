@@ -30,10 +30,11 @@
     #header h1 { /* float:left;  */ padding:25px 0 }
 
     #header #nav {  /* float:right; */ z-index:99999;
-    position:absolute; top:100%; transform:translateY(0%);
-    right:0; font-size:18px; color:#1e1e1e; background:#fff; 
-    display:none }
-    #header #nav.on { display:block }
+    position:fixed; top:123px; transform:translateY(0%);
+    right:-170px; font-size:18px; color:#1e1e1e; background:#fff; 
+    opacity:0; bottom:0; width:170px; overflow-y:auto }
+    #header.on #nav { top:96px;  }
+    /* #header #nav.on { right:0; } */
 
     #header #nav .depth1 > li { float:none; position:relative; }
 
